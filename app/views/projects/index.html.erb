@@ -1,0 +1,14 @@
+<% content_for :title, "Projetos · Lyricfy" %>
+<div class="breadcrumbs text-sm"><ul><li>Seu estúdio</li><li>Projetos</li></ul></div>
+<header class="studio-heading"><div><h1>Seus projetos</h1><p class="muted">Uma música, uma história. Dê tempo a cada verso.</p></div><%= link_to new_project_path, class: "btn btn-primary" do %><%= icon("plus") %> Importar mídia<% end %></header>
+<% if @projects.empty? %>
+<section class="empty-studio"><%= icon("movie") %><h2>O próximo refrão começa aqui.</h2><p>Escolha um áudio ou vídeo, adicione a letra e transforme a sua revisão em um vídeo legendado.</p><%= link_to "Criar primeiro projeto", new_project_path, class: "btn btn-primary" %><p class="muted small">Áudio ou vídeo local · Legendas SRT · Exportação MP4</p></section>
+<% else %>
+<div class="project-list"><% @projects.each do |project| %><%= link_to project, class: "project-row" do %><span class="project-icon"><%= icon(project.media_kind == "audio" ? "music" : "movie") %></span><span class="project-description"><strong><%= project.title %></strong><small><%= project.original_filename %></small></span><span class="badge badge-ghost"><%= project.media_kind == "audio" ? "Áudio" : "Vídeo" %></span><span class="muted"><%= project.duration.round(1) %> s</span><%= icon("arrow-right") %><% end %><% end %></div>
+<% end %>
+
+<% if @imports.any? %>
+<section class="import-workspace"><h2>Importações por URL</h2>
+<% @imports.each do |item| %><p><%= link_to item.url, media_import_path(item) %> · <%= { "queued" => "Na fila", "running" => "Baixando", "failed" => "Falhou" }.fetch(item.status, item.status) %></p><% end %>
+</section>
+<% end %>

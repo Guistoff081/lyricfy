@@ -1,0 +1,19 @@
+<% content_for :title, "Importar mídia · Lyricfy" %>
+<div class="breadcrumbs text-sm"><ul><li><%= link_to "Projetos", root_path %></li><li>Importar mídia</li></ul></div>
+<header class="studio-heading"><div><h1>Comece com a sua música.</h1><p class="muted">Importe um arquivo para abrir o editor de legendas.</p></div></header>
+<section class="import-workspace">
+<% if @project.errors.any? %><div class="alert alert-error" role="alert"><ul><% @project.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div><% end %>
+<%= form_with model: @project, local: true, html: { multipart: true } do |form| %>
+<div class="field"><%= form.label :title, "Nome do projeto" %><%= form.text_field :title, class: "input", required: true, maxlength: 160, placeholder: "Primeiro refrão" %></div>
+<div class="upload-area"><%= icon("upload") %><h2>Selecione sua mídia</h2><p class="muted">O original permanece intacto. Uma cópia será salva no projeto.</p><%= form.label :media, "Arquivo de áudio ou vídeo" %><%= form.file_field :media, class: "file-input", accept: "audio/*,video/*", required: true %></div>
+<div class="form-footer"><%= link_to "Voltar aos projetos", root_path, class: "btn btn-ghost" %><%= form.submit "Abrir no editor", class: "btn btn-primary" %></div><% end %>
+</section>
+
+<section class="import-workspace">
+<h2>Ou cole um vídeo do YouTube</h2>
+<p class="muted">Importamos o vídeo, o título e as legendas disponíveis em português ou inglês. Links com playlist importam somente o vídeo selecionado.</p>
+<%= form_with url: media_imports_path, local: true do |form| %>
+<div class="field"><%= form.label :url, "Link do vídeo" %><%= form.url_field :url, required: true, class: "input", placeholder: "https://youtu.be/…" %></div>
+<%= form.submit "Importar do YouTube", class: "btn btn-primary" %>
+<% end %>
+</section>

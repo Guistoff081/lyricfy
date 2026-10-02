@@ -1,0 +1,11 @@
+/.bundle
+/vendor/bundle
+/log/*
+/tmp/*
+/storage/*
+!/log/.keep
+!/tmp/.keep
+!/storage/.keep
+/config/master.key
+.env*
+/node_modules/

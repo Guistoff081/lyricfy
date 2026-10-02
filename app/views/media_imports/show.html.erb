@@ -1,0 +1,12 @@
+<header class="studio-heading"><div><h1>Importar do YouTube</h1><p class="muted"><%= @import.url %></p></div></header>
+<section class="import-workspace">
+<% if @import.status == "failed" %>
+<div class="alert alert-error" role="alert"><p><%= @import.error_message %></p></div>
+<%= button_to "Tentar novamente", media_imports_path, params: { url: @import.url }, class: "btn btn-primary" %>
+<% else %>
+<p role="status"><%= @import.status == "queued" ? "Na fila de importação." : "Baixando vídeo e procurando legendas…" %></p>
+<p class="muted">Você pode continuar usando o estúdio. Atualize para abrir o projeto quando estiver pronto.</p>
+<%= link_to "Atualizar", media_import_path(@import), class: "btn btn-primary" %>
+<% end %>
+<%= link_to "Voltar aos projetos", root_path, class: "btn btn-ghost" %>
+</section>

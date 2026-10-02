@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="studio">
+<head>
+  <title><%= content_for(:title) || "Lyricfy · Estúdio Noturno" %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %><%= csp_meta_tag %>
+  <%= stylesheet_link_tag "tailwind" %><%= javascript_importmap_tags %>
+</head>
+<body>
+  <aside class="studio-sidebar">
+    <a href="<%= root_path %>" class="studio-brand"><%= icon("moon") %><span><strong>Estúdio Noturno</strong><small>Lyricfy</small></span></a>
+    <nav aria-label="Navegação principal"><ul class="menu studio-menu">
+      <li><%= link_to root_path, class: (action_name != "new" ? "menu-active" : nil) do %><%= icon("folders") %> Projetos<% end %></li>
+      <li><%= link_to new_project_path, class: (action_name == "new" ? "menu-active" : nil) do %><%= icon("upload") %> Importar mídia<% end %></li>
+    </ul></nav>
+    <div class="sidebar-note"><%= icon("device-desktop") %><span>Seu estúdio, no seu computador.<small>Mídias e projetos salvos localmente.</small></span></div>
+  </aside>
+  <main class="studio-main">
+    <% flash.each do |type, message| %><div class="alert <%= type.to_s == 'alert' ? 'alert-error' : 'alert-success' %> studio-alert" role="status"><%= message %></div><% end %>
+    <%= yield %>
+  </main>
+</body></html>
